@@ -21,3 +21,11 @@ for(i in 1:ncol(data)) {       # for-loop over columns
   dev.off()
 }
 
+pdf(file='plots/variable_distributions/response_variable.pdf')
+hist(y,
+     main='Response Variable',
+     xlab="Values",
+     col="pink"
+     #freq=FALSE 
+)
+dev.off()
