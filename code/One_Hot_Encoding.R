@@ -38,5 +38,5 @@ one_hot_encoding = function(df, columns="OHE"){ #OHE=column names to one hot enc
 Ordinal_columns <- data[c(4:7,9,11,45:48,92:95)]
 colnames(Ordinal_columns)
 
-df_test <- one_hot_encoding(data, columns=colnames(Ordinal_columns))
+df_test <- one_hot_encoding(data, columns=colnames(Ordinal_columns)) #For now, called it df_test
 colnames(df_test)
