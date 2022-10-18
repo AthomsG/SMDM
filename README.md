@@ -21,8 +21,8 @@ This part should be the focus of less code inclined group members.
   - [ ] Naive-Bayes 
   - [ ] let's use K-fold to train the models
   #### Extra Models if we have time
-    - [ ] SVM
-    - [ ] Logistic Regression
+      SVM
+      Logistic Regression
   
 ### Model Comparison
 
