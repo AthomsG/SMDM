@@ -30,3 +30,4 @@ This part should be the focus of less code inclined group members.
 ### Some Ideias
 
 Can we use knn one binary and continuous variables? Read [here](https://stats.stackexchange.com/questions/271043/k-nearest-neighbour-with-continuous-and-binary-variables)
+The use of KNN for missing values. Read [here](https://towardsdatascience.com/the-use-of-knn-for-missing-values-cf33d935c637)
