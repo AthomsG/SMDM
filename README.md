@@ -27,3 +27,6 @@ This part should be the focus of less code inclined group members.
   
 ### Model Comparison
 
+### Some Ideias
+
+Can we use knn one binary and continuous variables? Read [here](https://stats.stackexchange.com/questions/271043/k-nearest-neighbour-with-continuous-and-binary-variables)
