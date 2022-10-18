@@ -11,6 +11,7 @@ We have to write a text explining the dataset and the classificatin problem that
 This part should be the focus of less code inclined group members.
 
 ### Data Pre-processing & Visualization
+  - [ ] Dealing with missing data
   - [ ] One-hot encoding nominal
   - [ ] Real -> Nominal -> One-hot encoding
   - [ ] Outlier Deteticion (?)
