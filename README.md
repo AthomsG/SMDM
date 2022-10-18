@@ -20,6 +20,9 @@ This part should be the focus of less code inclined group members.
   - [ ] KNN
   - [ ] Naive-Bayes 
   - [ ] let's use K-fold to train the models
+  #### Extra Models if we have time
+    - [ ] SVM
+    - [ ] Logistic Regression
   
 ### Model Comparison
 
