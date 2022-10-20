@@ -16,10 +16,10 @@ This part should be the focus of less code inclined group members. (has been don
 
 ### Data Pre-processing & Visualization
   - [ ] Dealing with missing data
-  - [ ] One-hot encoding nominal (Done)
+  - [X] One-hot encoding nominal
   - [ ] Real -> Nominal -> One-hot encoding
   - [ ] Outlier Deteticion (?)
-  - [ ] Chi-Squared (Done)
+  - [X] Chi-Squared
 
 ### Classification
   - [ ] KNN
