@@ -2,6 +2,10 @@
 
 This README.md will work as a to-do list.
 
+## Questions for the Teacher
+
+  - [ ] What to do about the missing values? Some variables have a lot of them...
+
 ## 1st Submission
 
 ### Introductory Text
@@ -32,3 +36,5 @@ This part should be the focus of less code inclined group members. (has been don
 Can we use knn one binary and continuous variables? Read [here](https://stats.stackexchange.com/questions/271043/k-nearest-neighbour-with-continuous-and-binary-variables)
 
 The use of KNN for missing values. Read [here](https://towardsdatascience.com/the-use-of-knn-for-missing-values-cf33d935c637)
+
+###
