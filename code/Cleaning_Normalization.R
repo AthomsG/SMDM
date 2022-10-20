@@ -1,14 +1,15 @@
-data<-read.csv("datasets/MI.data") #Load Dataset
+#Load Dataset
+data<-read.csv("datasets/MI.data") 
 data[]<-lapply(data, function(x) as.numeric(as.character(x))) #Force all datatypes to be numeric
 y <- data[c(122)]#Output
 
-data <- data[-c(1, 95, 102, 105, 112:121, 123, 124)] #Remove irrelevant data columns
+#Remove irrelevant data columns
+data <- data[-c(1, 95, 102, 105, 112:121, 123, 124)] 
 
-#Remove columns with more than 20% NA
-data<-data[, which(colMeans(!is.na(data)) > 0.2)]
+#Remove columns with more than 25% NA
+data<-data[, which(colMeans(!is.na(data)) > 0.25)]
 
-
-#Change NA values with the mode
+#Change NA values 
 getmode <- function(v) { #Function for the mode
   uniqv <- unique(v)
   uniqv[which.max(tabulate(match(v, uniqv)))]
@@ -29,4 +30,8 @@ min_max_norm <- function(x) {
   (x - min(x)) / (max(x) - min(x))
 }
 data_norm <- as.data.frame(lapply(data_na, min_max_norm))
-final_data <- data_norm
+
+
+
+
+
