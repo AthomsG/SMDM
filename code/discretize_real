@@ -1,0 +1,22 @@
+# Real/numerical 2, 35, 36, 37, 38, 84, 86, 87, 88, 89. 90, 91  normalizen, anders te veel effect
+# Ordinal 4 -7, 9, 11 , 45 - 48, 92-95, 100-105
+
+#install.packages("arules") # install the package
+library(arules)
+
+data<-read.csv("datasets/MI.data") #Load Dataset
+data[]<-lapply(data, function(x) as.numeric(as.character(x))) #Force all datatypes to be numeric
+
+c_real<-c(2, 35, 36, 37, 38, 84, 86, 87, 88, 89, 90, 91)#Vector with continuos distributed data
+real_data<-(data[c_real])
+
+n_breaks=5
+d_data<-factor(discretize(
+    real_data[,1],
+    method = "interval",
+    breaks = n_breaks
+))
+#levels(d_data)<- c(1:n_breaks)
+
+hist(as.numeric(d_data))
+hist(real_data[,1])
