@@ -34,10 +34,10 @@ min_max_norm <- function(x) {
 }
 data_norm <- as.data.frame(lapply(data_na, min_max_norm))
 
-#Remove variables with correlation matrix (real variables)
+#Remove variables with correlation matrix (real variables and ordinal data)
 
 
-#Remove variables with Chi-Squared test (categorical variables)
+#Remove variables with Chi-Squared test (Binary variables)
 
 
 #Optional
