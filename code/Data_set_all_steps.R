@@ -35,7 +35,9 @@ min_max_norm <- function(x) {
 data_norm <- as.data.frame(lapply(data_na, min_max_norm))
 
 #Remove variables with correlation matrix (real variables and ordinal data)
-
+#Split the data set in two seperate dataframes based on Binary vs real/ordinal
+# binary_data <- Filter(function(x) all(x %in% c(0, 1)), final_data)
+# real_data <- data.frame(final_data[, -which(names(final_data) %in% names(binary_data))])
 
 #Remove variables with Chi-Squared test (Binary variables)
 
