@@ -28,6 +28,7 @@ This part should be the focus of less code inclined group members. (has been don
   #### Extra Models if we have time
       SVM
       Logistic Regression
+      Random Forest
   
 ### Model Comparison
 
