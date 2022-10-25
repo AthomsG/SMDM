@@ -34,16 +34,49 @@ min_max_norm <- function(x) {
 }
 data_norm <- as.data.frame(lapply(data_na, min_max_norm))
 
-#Remove variables with correlation matrix (real variables and ordinal data)
+
 #Split the data set in two seperate dataframes based on Binary vs real/ordinal
-# binary_data <- Filter(function(x) all(x %in% c(0, 1)), final_data)
-# real_data <- data.frame(final_data[, -which(names(final_data) %in% names(binary_data))])
+binary_data <- Filter(function(x) all(x %in% c(0, 1)), data_norm)
+real_data <- data.frame(data_norm[, -which(names(data_norm) %in% names(binary_data))])
+
+#Remove variables with correlation matrix (real variables and ordinal data)
+
 
 #Remove variables with Chi-Squared test (Binary variables)
+#Code for chi-squared correlations between dependent variable and the independent variables
 
+#H0: The two variables are independent.
+#H1: The two variables relate to each other.
+
+
+x <- 1:length(binary_data)
+result <- vector('list', length(x))
+for(i in x){
+  test <- chisq.test(binary_data[,colnames(binary_data[i])], y$V122)
+  result[[i]] <- data.frame("X" = colnames(binary_data[i]), 
+                            "Y" = colnames(y), 
+                            "Chi.Square" = round(test$statistic,3),  
+                            "df"= test$parameter,  
+                            "p.value" = round(test$p.value, 3))
+  
+}
+#print(result) # to see the p values 
+#p values < 0.05: reject Null hypothesis : the selected variables are dependent, so can be used to predict the dependent variable
+
+#Feature selection: Selection variables that can be removed 
+x <- 1:length(binary_data)
+Remove_vars <- c(rep(0,length(binary_data)))
+for(i in x){
+  if(result[[i]][[5]]> 0.05){
+    Remove_vars[i] <- result[[i]][[1]]
+  }
+  
+}
+
+#Remove binary variables that have p-value > 0.05
+data_final <- data_norm[ , !(names(data_norm) %in% Remove_vars)]
 
 #Optional
 #One hot encoding of Ordinal values
-
 
 #
