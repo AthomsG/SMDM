@@ -74,7 +74,7 @@ for(i in x){
 }
 
 #Remove binary variables that have p-value > 0.05
-data_final <- data_norm[ , !(names(data_norm) %in% Remove_vars)]
+data_final_binary <- binary_data[ , !(names(binary_data) %in% Remove_vars)]
 
 #Optional
 #One hot encoding of Ordinal values
