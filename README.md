@@ -15,11 +15,13 @@ We have to write a text explining the dataset and the classificatin problem that
 This part should be the focus of less code inclined group members. (has been done aside from the data-set exploration)
 
 ### Data Pre-processing & Visualization
+  - [ ] Exploratory Plots (Use [Lab 2](https://web.tecnico.ulisboa.pt/~ist13493/MEDM2023/Lab2_EDA_KNN_NB/Lab2_2022.html) as reference)
   - [ ] Dealing with missing data
   - [X] One-hot encoding nominal
   - [ ] Real -> Nominal -> One-hot encoding
   - [ ] Outlier Deteticion (?)
   - [X] Chi-Squared
+  - [ ] How to deal with the imbalanced dataset
 
 ### Classification
   - [ ] KNN
@@ -32,6 +34,9 @@ This part should be the focus of less code inclined group members. (has been don
   
 ### Model Comparison
 
+  - [ ] Use F1-Score
+  - [ ] Use ROC curves
+ 
 ### Some Ideias
 
 Can we use knn one binary and continuous variables? Read [here](https://stats.stackexchange.com/questions/271043/k-nearest-neighbour-with-continuous-and-binary-variables)
