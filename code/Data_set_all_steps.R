@@ -47,8 +47,6 @@ real_data <- data.frame(data_norm[, -which(names(data_norm) %in% names(binary_da
 
 #H0: The two variables are independent.
 #H1: The two variables relate to each other.
-
-
 x <- 1:length(binary_data)
 result <- vector('list', length(x))
 for(i in x){
@@ -75,6 +73,34 @@ for(i in x){
 
 #Remove binary variables that have p-value > 0.05
 data_final_binary <- binary_data[ , !(names(binary_data) %in% Remove_vars)]
+
+#Removal of redundant variables real and ordinal data
+#Get correlation matrix. Don't forget to ignore categorical variables in this process
+cormat<-round(cor(real_data),2)
+
+################### AUXILIARY FUNCTIONS ##########################
+# Get upper triangle of the correlation matrix
+get_upper_tri <- function(cormat){
+  cormat[lower.tri(cormat)]<- NA
+  return(cormat)
+}
+##################################################################
+upper_tri <- get_upper_tri(cormat)
+#Remove one variable of pair with high correlation.
+related_index = c()
+for (line in 1:dim(upper_tri)[1]){
+  for (col in 1:line){
+    i = col+dim(upper_tri)[1]*(line-1)
+    if (abs(upper_tri[i])>0.8 & abs(upper_tri[i])<1){
+      related_index<-c(related_index, line)
+    }
+  }
+}
+
+data_final_real<-real_data[-related_index]
+
+#Merge, y variable is V122
+final_data <- cbind(data_final_binary,data_final_real)
 
 #Optional
 #One hot encoding of Ordinal values
