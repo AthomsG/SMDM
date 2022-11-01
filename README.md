@@ -27,6 +27,8 @@ This part should be the focus of less code inclined group members. (has been don
   - [ ] KNN
   - [ ] Naive-Bayes 
   - [ ] let's use K-fold to train the models
+  - [ ] Why is the KNN **not sensitive** to an imbalanced dataset?
+  - [ ] Why is the Naïve Bayes **sensitive** to an imbalanced dataset
   #### Extra Models if we have time
       SVM
       Logistic Regression
