@@ -101,6 +101,8 @@ data_final_real<-real_data[-related_index]
 
 #Merge, y variable is V122
 final_data <- cbind(data_final_binary,data_final_real)
+                      
+write.csv(final_data, "datasets/preprocessed.csv", row.names = FALSE)
 
 #Optional
 #One hot encoding of Ordinal values
