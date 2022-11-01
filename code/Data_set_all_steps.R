@@ -58,7 +58,7 @@ for(i in x){
                             "p.value" = round(test$p.value, 3))
   
 }
-# print(result) # to see the p values
+#print(result) # to see the p values 
 #p values < 0.05: reject Null hypothesis : the selected variables are dependent, so can be used to predict the dependent variable
 
 #Feature selection: Selection variables that can be removed 
@@ -103,8 +103,3 @@ data_final_real<-real_data[-related_index]
 final_data <- cbind(data_final_binary,data_final_real)
                       
 write.csv(final_data, "datasets/preprocessed.csv", row.names = FALSE)
-
-#Optional
-#One hot encoding of Ordinal values
-
-#
