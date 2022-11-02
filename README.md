@@ -24,7 +24,7 @@ This part should be the focus of less code inclined group members. (has been don
   - [ ] How to deal with the imbalanced dataset
 
 ### Classification
-  - [ ] KNN
+  - [X] KNN
   - [ ] Naive-Bayes 
   - [ ] let's use K-fold to train the models
   - [ ] Why is the KNN **not sensitive** to an imbalanced dataset?
