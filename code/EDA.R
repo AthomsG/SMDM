@@ -2,8 +2,6 @@ library(dplyr)
 library(tidyr)
 library(purrr)
 library(ggplot2)
-# # Real/numerical 2, 35, 36, 37, 38, 84, 86, 87, 88, 89. 90, 91  normalizen, anders te veel effect
-# 
 
 #Steps in order to fix the dataset
 #Load Dataset
@@ -16,10 +14,8 @@ y <- data[c(122)]#Output
 #Remove variables that are useless
 data <- data[-c(1, 95, 102, 105, 112:121, 123, 124)] 
 
-na_count <-sapply(data, function(y) sum(length(which(is.na(y)))))
-
-# na_count <- data.frame(na_count)
-
+#Mkae plot for amount of NA data points
+# na_count <-sapply(data, function(y) sum(length(which(is.na(y)))))
 # hist(na_count, breaks = 10, main = 'Histogram of missing values', xlab = 'Number of outliers')
 
 #Split the data set in three seperate dataframes based on Binary, real, ordinal
@@ -33,6 +29,7 @@ binary_data<-binary_data[, which(colMeans(!is.na(binary_data)) > 0.75)]
 real_data<-real_data_only[, which(colMeans(!is.na(real_data_only)) > 0.75)]
 ordinal_data<-ordinal_data[, which(colMeans(!is.na(ordinal_data)) > 0.75)]
 
+#Make boxplots to indicate outliers
 # for (i in colnames(real_data)){
 #   boxplot(data[i], main = i)
 # }
@@ -66,12 +63,7 @@ for (i in 1:ncol(real_data)){
   real_data[ , i][is.na(real_data[ , i])] <- mean(real_data[ , i], na.rm = TRUE)
 }
 
-real_data_y <- cbind(real_data, y)
-real_data_split <- split(real_data_y, real_data_y$V122)
-real_data_split_0 <- real_data_split[[1]]
-real_data_split_1<- real_data_split[[2]]
-
-# # Open pdf file
+# Make plot of distribution of continuous variables
 # pdf(file= "Histograms.pdf" )
 # 
 # # create a 3X3 grid
@@ -82,6 +74,26 @@ real_data_split_1<- real_data_split[[2]]
 #   real_data %>% pull(i) %>% hist(main = i)
 # }
 # 
+
+#Make plots for the real variables, where the distributions can be compared
+# real_data_y <- cbind(real_data, y)
+# real_data_split <- split(real_data_y, real_data_y$V122)
+# real_data_split_0 <- real_data_split[[1]]
+# real_data_split_1<- real_data_split[[2]]
+# 
+# pdf(file= "Histograms_y.pdf" )
+# 
+# # create a 2X2 grid
+# par( mfrow= c(3,2) )
+# # 
+# for (i in colnames(real_data_split_0)){
+#   if( i != 'V122'){
+#     real_data_split_0 %>%  pull(i) %>% hist(main = paste(i, ", V122 is False", sep=""), col = 'coral1')
+#     real_data_split_1 %>%  pull(i) %>% hist(main = paste(i, ", V122 is True", sep=""), col = 'cyan3')
+#   }
+# }
+
+#Make Bar charts for the ordinal data
 # pdf(file= "BarCharts_ordinal.pdf" )
 # 
 # # create a 2X2 grid
@@ -97,6 +109,7 @@ real_ordinal_data <- cbind(real_data, ordinal_data)
 min_max_norm <- function(x) {
   (x - min(x)) / (max(x) - min(x))
 }
+
 real_ordinal_data <- as.data.frame(lapply(real_ordinal_data, min_max_norm))
 
 
@@ -126,12 +139,12 @@ for(i in x){
   if(result[[i]][[5]]> 0.05){
     Remove_vars[i] <- result[[i]][[1]]
   }
-  
 }
 
 #Remove binary variables that have p-value > 0.05
 data_final_binary <- binary_data[ , !(names(binary_data) %in% Remove_vars)]
 
+#Make bar Charts of binary data after removal of features
 # pdf(file= "BarCharts_binary.pdf" )
 # 
 # # create a 2X2 grid
@@ -178,15 +191,4 @@ final_data <- cbind(data_final_binary,data_final_real)
 saveRDS(final_data, file = "datasets/preprocessed.RDS")
 
 
-pdf(file= "Histograms_y.pdf" )
-
-# create a 2X2 grid
-par( mfrow= c(3,2) )
-# 
-for (i in colnames(real_data_split_0)){
-  if( i != 'V122'){
-    real_data_split_0 %>%  pull(i) %>% hist(main = paste(i, ", V122 is False", sep=""), col = 'coral1')
-    real_data_split_1 %>%  pull(i) %>% hist(main = paste(i, ", V122 is True", sep=""), col = 'cyan3')
-  }
-}
 
