@@ -2,7 +2,7 @@ library(dplyr)
 library(tidyr)
 library(purrr)
 library(ggplot2)
-
+library(cowplot)
 #Steps in order to fix the dataset
 #Load Dataset
 # data<-read.csv("datasets/MI.data") 
@@ -192,3 +192,130 @@ saveRDS(final_data, file = "datasets/preprocessed.RDS")
 
 
 
+#V3
+#df <- data.frame(binary_data$V3, binary_data$V122)
+#data.frame(table(binary_data$v3, binary_data$v122))
+#dat <- data.frame(table(df$binary_data.V3,df$binary_data.V122))
+#names(dat) <- c("V3", "V122", "Count")
+
+#p1 <- ggplot(data=dat, aes(x=V3, y=Count, fill=V122)) + geom_bar(stat="identity")
+
+colnames(ordinal_data)
+#Stacked bar plots of binary data
+pdf(file="Stacked_Bar_plots_ordinal_1.pdf")
+
+#par(mfrow= c(3,6))
+
+#V4
+df <- data.frame(ordinal_data$V4, y$V122)
+dat <- data.frame(table(df$ordinal_data.V4, df$y.V122))
+names(dat) <- c("V4", "V122", "Count")
+p1 <- ggplot(data=dat, aes(x=V4, y=Count, fill=V122)) + geom_bar(stat="identity")
+
+#V5
+df <- data.frame(ordinal_data$V5, y$V122)
+dat <- data.frame(table(df$ordinal_data.V5, df$y.V122))
+names(dat) <- c("V5", "V122", "Count")
+p2 <- ggplot(data=dat, aes(x=V5, y=Count, fill=V122)) + geom_bar(stat="identity")
+
+#V6
+df <- data.frame(ordinal_data$V6, y$V122)
+dat <- data.frame(table(df$ordinal_data.V6, df$y.V122))
+names(dat) <- c("V6", "V122", "Count")
+p3 <- ggplot(data=dat, aes(x=V6, y=Count, fill=V122)) + geom_bar(stat="identity")
+
+#V7
+df <- data.frame(ordinal_data$V7, y$V122)
+dat <- data.frame(table(df$ordinal_data.V7, df$y.V122))
+names(dat) <- c("V7", "V122", "Count")
+p4 <- ggplot(data=dat, aes(x=V7, y=Count, fill=V122)) + geom_bar(stat="identity")
+
+#V9
+df <- data.frame(ordinal_data$V9, y$V122)
+dat <- data.frame(table(df$ordinal_data.V9, df$y.V122))
+names(dat) <- c("V9", "V122", "Count")
+p5 <- ggplot(data=dat, aes(x=V9, y=Count, fill=V122)) + geom_bar(stat="identity")
+
+#V11
+df <- data.frame(ordinal_data$V11, y$V122)
+dat <- data.frame(table(df$ordinal_data.V11, df$y.V122))
+names(dat) <- c("V11", "V122", "Count")
+p6 <- ggplot(data=dat, aes(x=V11, y=Count, fill=V122)) + geom_bar(stat="identity")
+
+#V12
+df <- data.frame(ordinal_data$V12, y$V122)
+dat <- data.frame(table(df$ordinal_data.V12, df$y.V122))
+names(dat) <- c("V12", "V122", "Count")
+p7 <- ggplot(data=dat, aes(x=V12, y=Count, fill=V122)) + geom_bar(stat="identity")
+
+#V45
+df <- data.frame(ordinal_data$V45, y$V122)
+dat <- data.frame(table(df$ordinal_data.V45, df$y.V122))
+names(dat) <- c("V45", "V122", "Count")
+p8 <- ggplot(data=dat, aes(x=V45, y=Count, fill=V122)) + geom_bar(stat="identity")
+
+#V46
+df <- data.frame(ordinal_data$V46, y$V122)
+dat <- data.frame(table(df$ordinal_data.V46, df$y.V122))
+names(dat) <- c("V46", "V122", "Count")
+p9 <- ggplot(data=dat, aes(x=V46, y=Count, fill=V122)) + geom_bar(stat="identity")
+
+#V47
+df <- data.frame(ordinal_data$V47, y$V122)
+dat <- data.frame(table(df$ordinal_data.V47, df$y.V122))
+names(dat) <- c("V47", "V122", "Count")
+p10 <- ggplot(data=dat, aes(x=V47, y=Count, fill=V122)) + geom_bar(stat="identity")
+
+#V48
+df <- data.frame(ordinal_data$V48, y$V122)
+dat <- data.frame(table(df$ordinal_data.V48, df$y.V122))
+names(dat) <- c("V48", "V122", "Count")
+p11 <- ggplot(data=dat, aes(x=V48, y=Count, fill=V122)) + geom_bar(stat="identity")
+
+#V92
+df <- data.frame(ordinal_data$V92, y$V122)
+dat <- data.frame(table(df$ordinal_data.V92, df$y.V122))
+names(dat) <- c("V92", "V122", "Count")
+p12 <- ggplot(data=dat, aes(x=V92, y=Count, fill=V122)) + geom_bar(stat="identity")
+
+#V93
+df <- data.frame(ordinal_data$V93, y$V122)
+dat <- data.frame(table(df$ordinal_data.V93, df$y.V122))
+names(dat) <- c("V93", "V122", "Count")
+p13 <- ggplot(data=dat, aes(x=V93, y=Count, fill=V122)) + geom_bar(stat="identity")
+
+#V94
+df <- data.frame(ordinal_data$V94, y$V122)
+dat <- data.frame(table(df$ordinal_data.V94, df$y.V122))
+names(dat) <- c("V94", "V122", "Count")
+p14 <- ggplot(data=dat, aes(x=V94, y=Count, fill=V122)) + geom_bar(stat="identity")
+
+#V100
+df <- data.frame(ordinal_data$V100, y$V122)
+dat <- data.frame(table(df$ordinal_data.V100, df$y.V122))
+names(dat) <- c("V100", "V122", "Count")
+p15 <- ggplot(data=dat, aes(x=V100, y=Count, fill=V122)) + geom_bar(stat="identity")
+
+#V101
+df <- data.frame(ordinal_data$V101, y$V122)
+dat <- data.frame(table(df$ordinal_data.V101, df$y.V122))
+names(dat) <- c("V101", "V122", "Count")
+p16 <- ggplot(data=dat, aes(x=V101, y=Count, fill=V122)) + geom_bar(stat="identity")
+
+#V103
+df <- data.frame(ordinal_data$V103, y$V122)
+dat <- data.frame(table(df$ordinal_data.V103, df$y.V122))
+names(dat) <- c("V103", "V122", "Count")
+p17 <- ggplot(data=dat, aes(x=V103, y=Count, fill=V122)) + geom_bar(stat="identity")
+
+#V104
+df <- data.frame(ordinal_data$V104, y$V122)
+dat <- data.frame(table(df$ordinal_data.V104, df$y.V122))
+names(dat) <- c("V104", "V122", "Count")
+p18 <- ggplot(data=dat, aes(x=V104, y=Count, fill=V122)) + geom_bar(stat="identity")
+
+plot_grid(p1, p2, p3, p4, p5, p6, p7, p8, p9)
+
+
+pdf(file="Stacked_Bar_plots_ordinal_2.pdf")
+plot_grid(p10, p11, p12, p13, p14, p15, p16, p17, p18)

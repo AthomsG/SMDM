@@ -1,6 +1,9 @@
 #Exploratory data analysis
 
 #Import libraries
+library(dplyr)
+library(tidyr)
+library(purrr)
 library(ggplot2)
 library(cowplot)
 
@@ -43,6 +46,14 @@ data_norm <- as.data.frame(lapply(data_na, min_max_norm))
 #Split the data set in two seperate dataframes based on Binary vs real/ordinal
 binary_data <- Filter(function(x) all(x %in% c(0, 1)), data_norm)
 real_data <- data.frame(data_norm[, -which(names(data_norm) %in% names(binary_data))])
+
+#Split the data set in three seperate dataframes based on Binary, real, ordinal
+binary_data <- Filter(function(x) all(x %in% c(0, 1, NA)), data)
+real_data_only <- data[c('V2', 'V35', 'V36', 'V37', 'V38', 'V84', 'V86', 'V87', 'V88', 'V89' ,'V90', 'V91')]
+without_ordinal <- cbind(binary_data, real_data_only)
+ordinal_data <- data.frame(data[, -which(names(data) %in% names(without_ordinal))])
+
+
 
 #Remove variables with correlation matrix (real variables and ordinal data)
 
@@ -201,4 +212,4 @@ p9 <- ggplot(data=dat, aes(x=V109, y=Count, fill=V122)) + geom_bar(stat="identit
 
 plot_grid(p1, p2, p3, p4, p5, p6, p7, p8, p9)
 
-
+ordinal_data
