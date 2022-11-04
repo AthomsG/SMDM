@@ -1,3 +1,10 @@
+library(dplyr)
+library(tidyr)
+library(purrr)
+library(ggplot2)
+# # Real/numerical 2, 35, 36, 37, 38, 84, 86, 87, 88, 89. 90, 91  normalizen, anders te veel effect
+# 
+
 #Steps in order to fix the dataset
 #Load Dataset
 # data<-read.csv("datasets/MI.data") 
@@ -9,8 +16,25 @@ y <- data[c(122)]#Output
 #Remove variables that are useless
 data <- data[-c(1, 95, 102, 105, 112:121, 123, 124)] 
 
+#Split the data set in three seperate dataframes based on Binary, real, ordinal
+binary_data <- Filter(function(x) all(x %in% c(0, 1, NA)), data)
+real_data_only <- data[c('V2', 'V35', 'V36', 'V37', 'V38', 'V84', 'V86', 'V87', 'V88', 'V89' ,'V90', 'V91')]
+without_ordinal <- cbind(binary_data, real_data_only)
+ordinal_data <- data.frame(data[, -which(names(data) %in% names(without_ordinal))])
+
 #Remove variables that have more than 25% missing values
-data<-data[, which(colMeans(!is.na(data)) > 0.25)]
+binary_data<-binary_data[, which(colMeans(!is.na(binary_data)) > 0.75)]
+real_data<-real_data_only[, which(colMeans(!is.na(real_data_only)) > 0.75)]
+ordinal_data<-ordinal_data[, which(colMeans(!is.na(ordinal_data)) > 0.75)]
+
+#Outlier replacement wit NA for the real values
+outlierreplacement <- function(dataframe){
+  dataframe %>%          
+    map_if(is.numeric, ~ replace(.x, .x %in% boxplot.stats(.x)$out, NA)) %>%
+    bind_cols 
+}
+
+real_data <- data.frame(outlierreplacement(real_data))
 
 #Fix NaN values: Real variables: Mean, Binary variables: Mode
 getmode <- function(v) { #Function for the mode
@@ -18,28 +42,26 @@ getmode <- function(v) { #Function for the mode
   uniqv[which.max(tabulate(match(v, uniqv)))]
 }
 
-data_na <- data
-for(i in 1:ncol(data)) {
-  if (is.na(getmode (data_na[ , i]))){ #If mode is NA, most likely that it is real value, mean is okay
-    data_na[ , i][is.na(data_na[ , i])] <- mean(data_na[ , i], na.rm = TRUE)
-  }
-  else{ #Take for the ordinal and binary 
-    data_na[ , i][is.na(data_na[ , i])] <- getmode(data_na[ , i])
-  }
+#For binary and ordinal values, replace NA values with mode
+for(i in 1:ncol(binary_data)){
+  binary_data[ , i][is.na(binary_data[ , i])] <- getmode(binary_data[ , i])
 }
 
-#Normalization/standardization of real values
+for(i in 1:ncol(ordinal_data)){
+  ordinal_data[ , i][is.na(ordinal_data[ , i])] <- getmode(ordinal_data[ , i])
+}
+
+#For real values, the mean
+for (i in 1:ncol(real_data)){
+  real_data[ , i][is.na(real_data[ , i])] <- mean(real_data[ , i], na.rm = TRUE)
+}
+
+#Normalization/standardization of real and ordinal values
+real_ordinal_data <- cbind(real_data, ordinal_data)
 min_max_norm <- function(x) {
   (x - min(x)) / (max(x) - min(x))
 }
-data_norm <- as.data.frame(lapply(data_na, min_max_norm))
-
-
-#Split the data set in two seperate dataframes based on Binary vs real/ordinal
-binary_data <- Filter(function(x) all(x %in% c(0, 1)), data_norm)
-real_data <- data.frame(data_norm[, -which(names(data_norm) %in% names(binary_data))])
-
-#Remove variables with correlation matrix (real variables and ordinal data)
+real_ordinal_data <- as.data.frame(lapply(real_ordinal_data, min_max_norm))
 
 
 #Remove variables with Chi-Squared test (Binary variables)
@@ -76,7 +98,7 @@ data_final_binary <- binary_data[ , !(names(binary_data) %in% Remove_vars)]
 
 #Removal of redundant variables real and ordinal data
 #Get correlation matrix. Don't forget to ignore categorical variables in this process
-cormat<-round(cor(real_data),2)
+cormat<-round(cor(real_ordinal_data),2)
 
 ################### AUXILIARY FUNCTIONS ##########################
 # Get upper triangle of the correlation matrix
@@ -97,9 +119,14 @@ for (line in 1:dim(upper_tri)[1]){
   }
 }
 
-data_final_real<-real_data[-related_index]
+if (is.null(related_index)){
+  data_final_real <- real_ordinal_data
+}else{
+  data_final_real<-real_ordinal_data[-related_index]
+}
 
 #Merge, y variable is V122
-final_data <- cbind(data_final_binary,data_final_real)
 
-saveRDS(final_data, file = "datasets/preprocessed.RDS") 
+final_data <- cbind(data_final_binary,data_final_real)
+# 
+saveRDS(final_data, file = "datasets/preprocessed.RDS")
