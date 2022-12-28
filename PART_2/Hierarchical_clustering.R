@@ -1,4 +1,4 @@
-install.packages(c("cluster", "factoextra","fpc"))
+#install.packages(c("cluster", "factoextra","fpc"))
 library(cluster)
 library(factoextra)
 
@@ -8,7 +8,7 @@ data$V122 <- NULL
 
 
 mycluster <- function(x, k) list(cluster=cutree(hclust(dist(x), method = "average"),k=k))
-gap_stat <- clusGap(data, FUN = mycluster, K.max = 3, B = 500) 
+gap_stat <- clusGap(data, FUN = mycluster, K.max = 8, B = 500) 
 fviz_gap_stat(gap_stat) # "firstSEmax"
 
 #https://www.r-bloggers.com/2017/12/how-to-perform-hierarchical-clustering-using-r/
