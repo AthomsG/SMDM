@@ -10,9 +10,9 @@ y <- data$V122
 data$V122 <- NULL
 
 #See what the difference methods can do
-# mycluster <- function(x, k) list(cluster=cutree(hclust(dist(x), method = "average"),k=k))
-# gap_stat <- clusGap(data, FUN = mycluster, K.max = 8, B = 500) 
-# fviz_gap_stat(gap_stat) # "firstSEmax"
+mycluster <- function(x, k) list(cluster=cutree(hclust(dist(x), method = "average"),k=k))
+gap_stat <- clusGap(data, FUN = mycluster, K.max = 8, B = 500)
+fviz_gap_stat(gap_stat) # "firstSEmax"
 
 #New way
 #aggolomerative
@@ -42,8 +42,8 @@ grp <- cutree(res.diana, k =2)
 rand_index <- rand.index(grp,y)
 
 
-#make dendogram
-fviz_dend(agnes, cex = 0.6, k = 2)
-
-#Make cluster plot
-fviz_cluster(list(data = data, cluster = grp), ellipse.type = "norm")
+# #make dendogram
+# fviz_dend(agnes, cex = 0.6, k = 2)
+# 
+# #Make cluster plot
+# fviz_cluster(list(data = data, cluster = grp), ellipse.type = "norm")
