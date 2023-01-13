@@ -88,7 +88,7 @@ fviz_cluster(kmed, data = data)
 }
 
 {
-  kmed_mad<-mapvalues(kmed$cluster, from = c(1, 2), to = c(1, 0))
+  kmed_mad<-mapvalues(kmed$cluster, from = c(2, 1), to = c(0, 1))
   table(kmed, class)
 }
 
@@ -103,7 +103,9 @@ abline(h = 2, lty = 2)
 dev.off()
 
 # Compute DBSCAN using fpc package
-db <- fpc::dbscan(data, eps = 2, MinPts = 40)
+db <- fpc::dbscan(data, eps = 2, MinPts = 1000)
+
+sum(db$cluster==0)
 
 {
   table(db$cluster, class)
@@ -130,6 +132,17 @@ barplot(height=c(107, 1593),
 
 ############################################################################
 #                           HIERARCHAL CLUSTERING                          #
+############################################################################
+
+d_data<-dist(scale(data))
+hc_iris <- hclust(d_data, method = "ward.D2")
+
+fviz_dend(hc_iris,k = 2,cex = 0.5,k_colors = c("#00AFBB","#E7B800","#FC4E07"),
+          color_labels_by_k = TRUE, ggtheme = theme_minimal())
+
+groups <- cutree(hc_iris, k = 2)
+
+table(class,groups)
 ############################################################################
 
 #install.packages(c("cluster", "factoextra","fpc"))
