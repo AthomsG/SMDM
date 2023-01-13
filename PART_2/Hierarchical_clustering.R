@@ -29,10 +29,14 @@ for (method in methods){
                      metric = "euclidean",
                      method = method)
   grp <- cutree(res.agnes, k =2)
+  print(table(mapvalues(grp, from = c(2, 1), to = c(0, 1)),y))
+  print(table(mapvalues(grp, from = c(1, 2), to = c(0, 1)),y))
   rand_index <- rand.index(grp,y)
   print(method)
   print(rand_index)
 }
+
+
 
 #Divisive
 res.diana <- diana(x = data,
@@ -40,7 +44,8 @@ res.diana <- diana(x = data,
 
 grp <- cutree(res.diana, k =2)
 rand_index <- rand.index(grp,y)
-
+print(table(mapvalues(grp, from = c(2, 1), to = c(0, 1)),y))
+print(table(mapvalues(grp, from = c(1, 2), to = c(0, 1)),y))
 
 # #make dendogram
 # fviz_dend(res.diana, cex = 0.6, k = 2)
