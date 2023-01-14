@@ -35,19 +35,33 @@ data <- data[,!names(data) %in%
 #Number of Clusters vs. the Total Within Sum of Squares
 fviz_nbclust(data, kmeans, method = "wss")
 
-
-#or this plot it appears that there is a bit of an elbow or “bend” at k = 3 clusters.
-
-
-#Perform K-Means Clustering with Optimal K
-
-#perform k-means clustering with k = 3 clusters
+#perform k-means clustering with k = 2 clusters
 km <- kmeans(data, centers = 2, nstart = 25)
 #view results
 km
 
+# Add the cluster labels to the dataset
+data$cluster <- km$cluster
+data$class   <- class
+# Plot the distribution of a variable in each cluster
+hist(class)
+
+ggplot(data, aes(x = class, fill = factor(cluster))) +
+  geom_bar(position = "dodge") +
+  ggtitle("Distribution of cluster for each class") +
+  xlab("Class") +
+  ylab("Count") +
+  scale_x_discrete(breaks = c("0", "1"), labels = c("Outcome 1", "Outcome 2"))
+
+data <- data[,!names(data) %in% 
+               c('class', 'cluster')]
+
 #plot results of final k-means model
 fviz_cluster(km, data = data)
+
+#Silhouette Plot
+sil <- silhouette(km$cluster, dist(data))
+fviz_silhouette(sil)
 
 {
   kmed_mad<-mapvalues(km$cluster, from = c(1, 2), to = c(0, 1))
@@ -59,11 +73,8 @@ fviz_cluster(km, data = data)
   table(kmed_mad, class)
 }
 
-
 #find means of each cluster
 aggregate(data, by=list(cluster=km$cluster), mean)
-
-
 
 final_data <- cbind(data, cluster = km$cluster)
 
@@ -76,8 +87,28 @@ fviz_nbclust(data, pam, method = "wss")
 #perform k-medoids clustering with k = 7 clusters
 kmed <- pam(data, k = 2)
 
+# Add the cluster labels to the dataset
+data$cluster <- kmed$cluster
+data$class   <- class
+# Plot the distribution of a variable in each cluster
+
+ggplot(data, aes(x = class, fill = factor(cluster))) +
+  geom_bar(position = "dodge") +
+  ggtitle("Distribution of cluster for each class") +
+  xlab("Class") +
+  ylab("Count") +
+  scale_x_discrete(breaks = c("0", "1"), labels = c("Outcome 1", "Outcome 2"))
+
+data <- data[,!names(data) %in% 
+               c('class', 'cluster')]
+
 #view results
 kmed
+
+
+#Silhouette Plot
+sil <- silhouette(kmed$cluster, dist(data))
+fviz_silhouette(sil)
 
 #plot results of final k-medoids model
 fviz_cluster(kmed, data = data)
@@ -88,7 +119,7 @@ fviz_cluster(kmed, data = data)
 }
 
 {
-  kmed_mad<-mapvalues(kmed$cluster, from = c(2, 1), to = c(0, 1))
+  kmed_mad<-mapvalues(kmed$cluster, from = c(1, 2), to = c(1, 0))
   table(kmed, class)
 }
 
@@ -103,9 +134,22 @@ abline(h = 2, lty = 2)
 dev.off()
 
 # Compute DBSCAN using fpc package
-db <- fpc::dbscan(data, eps = 2, MinPts = 1000)
+db <- fpc::dbscan(data, eps = 2, MinPts = 900)
 
-sum(db$cluster==0)
+# Add the cluster labels to the dataset
+data$cluster <- db$cluster
+data$class   <- class
+# Plot the distribution of a variable in each cluster
+
+ggplot(data, aes(x = class, fill = factor(cluster))) +
+  geom_bar(position = "dodge") +
+  ggtitle("Distribution of cluster for each class") +
+  xlab("Class") +
+  ylab("Count") +
+  scale_x_discrete(breaks = c("0", "1"), labels = c("Outcome 1", "Outcome 2"))
+
+data <- data[,!names(data) %in% 
+               c('class', 'cluster')]
 
 {
   table(db$cluster, class)
@@ -129,6 +173,7 @@ barplot(height=c(107, 1593),
         border="white",
         xlab="Frequency",
         ylab="Members")
+
 
 ############################################################################
 #                           HIERARCHAL CLUSTERING                          #
